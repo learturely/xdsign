@@ -24,26 +24,15 @@ crate-type = ["lib", "cdylib", "staticlib"]
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 [features]
-default = ["completions", "ui_solver"]
-all_ui_solver = ["slide_ui_solver", "ui_solver", "obstacle_ui_solver", "rotate_ui_solver"]
-ui_solver = ["icon_click_ui_solver", "text_click_ui_solver"]
-completions = ["completion-nu", "completion-carapace", "completion-fig"]
-completion-nu = ["clap_complete_command", "clap_complete_command/nushell"]
-completion-carapace = ["clap_complete_command", "clap_complete_command/carapace"]
-completion-fig = ["clap_complete_command", "clap_complete_command/fig"]
-slide_ui_solver = ["cxlib_captcha/slide_ui_solver"]
-rotate_ui_solver = ["cxlib_captcha/rotate_ui_solver"]
-obstacle_ui_solver = ["cxlib_captcha/obstacle_ui_solver"]
-icon_click_ui_solver = ["cxlib_captcha/icon_click_ui_solver"]
-text_click_ui_solver = ["cxlib_captcha/text_click_ui_solver"]
+default = ["cxlib/completion-all", "cxlib/ui_solver"]
+completion = ["cxlib/completion"]
 
 [dependencies]
 # tikv-jemallocator = "0.5"
 chrono = "0.4"
-clap = { version = "4.5", features = ["derive"] }
-clap_complete_command = { version = "0.6", default-features = false, optional = true }
+clap = { version = "4.5" }
 cxlib = { git = "https://github.com/worksoup/cxlib.git" }
-# cxsign = { path = "../cxlib/" }
+# cxsign = { path = "../newsign/" }
 env_logger = "0.11"
 indicatif = "0.17"
 indicatif-log-bridge = "0.2"
@@ -60,10 +49,7 @@ panic = "abort"
 #lto = "fat"
 strip = "symbols"
 
-[target.'cfg(any(target_os = "linux", target_os = "windows", target_os = "macos"))'.dependencies]
-cxlib_captcha = { git = "https://github.com/worksoup/cxlib.git" }
-
 [build-dependencies]
 resvg = "0.44"
-ico = "0.3"
+ico = "0.4"
 embed-resource = "3.0"

@@ -13,10 +13,19 @@
 // You should have received a copy of the GNU Affero General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-mod locations;
-mod sign;
-mod xddcc;
+use cxlib::{
+    default_impl::{sign::LocationSign, signner::LocationInfoGetterTrait},
+    types::Location,
+};
+use xdsign_data::LOCATIONS;
+#[derive(Copy, Clone, Debug)]
+pub struct XdsignLocationInfoGetter;
 
-pub use locations::*;
-pub use xddcc::*;
-pub use sign::*;
+impl LocationInfoGetterTrait for XdsignLocationInfoGetter {
+    fn get_location_by_location_str(&self, location_str: &str) -> Option<Location> {
+        LOCATIONS.get(location_str).cloned()
+    }
+    fn get_fallback_location(&self, _: &LocationSign) -> Option<Location> {
+        LOCATIONS.values().next().cloned()
+    }
+}

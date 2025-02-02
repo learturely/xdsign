@@ -17,7 +17,7 @@ use clap::{arg, ArgMatches, Command, CommandFactory, FromArgMatches, Parser};
 use cxlib::{AppTrait, CmdApp, CmdMetaAppTrait};
 
 #[derive(Parser, Debug, Clone)]
-#[command(name = "locations")]
+#[command(name = "locations", alias = "lsl")]
 ///列出所有位置。
 pub struct LocationsParser {
     /// 以更好的格式显示结果。

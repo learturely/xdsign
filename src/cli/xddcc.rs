@@ -24,7 +24,7 @@ use std::path::PathBuf;
 use xddcc::{lesson::Lesson, Live, PairVec, Room};
 
 #[derive(Parser, Debug, Clone)]
-#[command(name = "xddcc")]
+#[command(name = "xddcc", alias = "x")]
 /// 获取直播信息。
 pub struct XddccParser {
     /// 获取特定账号下节课的直播信息，格式为以半角逗号隔开的字符串。

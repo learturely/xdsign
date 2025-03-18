@@ -47,7 +47,7 @@ jobs:
         with:
           command: clippy
   build:
-    if: ${{ github.ref == 'refs/heads/main' }}
+    if: ${{ github.ref == 'refs/heads/main' || github.ref == 'refs/heads/dev-build' }}
     needs: [ check ]
     strategy:
       fail-fast: false

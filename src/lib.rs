@@ -85,13 +85,14 @@ pub fn run() {
             LoginSolvers::register(login_solver)
                 .unwrap_or_else(|_| warn!("登录协议 `{login_type}` 注册失败！"));
         }
+        // `init_function` 放在最前防止不起作用。
+        init_function();
         let db = DataBase::default();
         db.add_table::<AccountTable>();
         db.add_table::<ExcludeTable>();
         db.add_table::<AliasTable>();
         db.add_table::<LocationTable>();
         db.add_table::<CourseTable>();
-        init_function();
         let multi = init_output();
         (CmdAppContext::new(db, self_.command().clone(), multi), ())
     }

@@ -14,9 +14,7 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 mod locations;
-mod sign;
 mod xddcc;
 
 pub use locations::*;
 pub use xddcc::*;
-pub use sign::*;

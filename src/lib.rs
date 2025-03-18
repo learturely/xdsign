@@ -19,14 +19,14 @@ mod location_info_getter;
 mod my_progress_bar;
 pub fn run() {
     use crate::{
-        cli::{LocationsCmdApp, SignMainApp, XddccCmdApp},
+        cli::{LocationsCmdApp, XddccCmdApp},
         cmd_app_context::CmdAppContext,
     };
     use cxlib::{
+        login::{LoginSolverTrait, LoginSolvers},
         types::Location,
-        user::{LoginSolverTrait, LoginSolvers},
         utils::time_it_and_print_result,
-        AccountCmdApp, AccountsCmdApp, AppTrait, CmdApp, CoursesCmdApp, ListCmdApp,
+        AccountCmdApp, AccountsCmdApp, AppTrait, CmdApp, CoursesCmdApp, SignMainApp,
         WhereIsConfigCmdApp,
     };
     use indicatif::MultiProgress;
@@ -37,7 +37,7 @@ pub fn run() {
         use cxlib::{
             captcha::CaptchaType,
             default_impl::store::{
-                AccountTable, AliasTable, DataBase, ExcludeTable, LocationTable,
+                AccountTable, AliasTable, CourseTable, DataBase, ExcludeTable, LocationTable,
             },
             store::Dir,
         };
@@ -90,20 +90,20 @@ pub fn run() {
         db.add_table::<ExcludeTable>();
         db.add_table::<AliasTable>();
         db.add_table::<LocationTable>();
+        db.add_table::<CourseTable>();
         init_function();
         let multi = init_output();
         (CmdAppContext::new(db, self_.command().clone(), multi), ())
     }
     let cmd_app = CmdApp::new(clap::command!())
-        .main_cmd_app(SignMainApp)
-        .meta_app(ListCmdApp::default())
-        .meta_app(AccountCmdApp::default())
-        .meta_app(AccountsCmdApp::default())
-        .meta_app(CoursesCmdApp::default())
-        .meta_app(LocationsCmdApp::default())
-        .meta_app(XddccCmdApp::default())
-        .meta_app(WhereIsConfigCmdApp::default());
+        .main_app::<SignMainApp>(Default::default())
+        .meta_app(AccountCmdApp)
+        .meta_app(AccountsCmdApp)
+        .meta_app(CoursesCmdApp)
+        .meta_app(LocationsCmdApp)
+        .meta_app(XddccCmdApp)
+        .meta_app(WhereIsConfigCmdApp);
     #[cfg(feature = "completion")]
-    let cmd_app = cmd_app.meta_app(cxlib::CompletionsCmdApp::default());
+    let cmd_app = cmd_app.meta_app(cxlib::CompletionCmdApp);
     cmd_app.init_and_run(init)
 }

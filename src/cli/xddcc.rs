@@ -13,10 +13,10 @@
 // You should have received a copy of the GNU Affero General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-use clap::{arg, ArgMatches, Command, CommandFactory, FromArgMatches, Parser};
+use clap::{arg, ArgMatches, FromArgMatches, Parser};
 use cxlib::{
     default_impl::{store::AccountTable, store::DataBase},
-    AppTrait, CmdApp, CmdMetaAppTrait,
+    AppTrait, CmdMetaAppTrait,
 };
 use indicatif::MultiProgress;
 use log::warn;
@@ -171,21 +171,8 @@ impl XddccParser {
         }
     }
 }
-pub struct XddccCmdApp {
-    command: Command,
-}
-impl XddccCmdApp {
-    pub fn new() -> Self {
-        Self {
-            command: XddccParser::command(),
-        }
-    }
-}
-impl Default for XddccCmdApp {
-    fn default() -> Self {
-        Self::new()
-    }
-}
+#[derive(Debug, Clone, Default)]
+pub struct XddccCmdApp;
 impl<Context: AsRef<DataBase> + AsRef<MultiProgress>> AppTrait<Context> for XddccCmdApp {
     type OwnedData = XddccParser;
 
@@ -193,13 +180,9 @@ impl<Context: AsRef<DataBase> + AsRef<MultiProgress>> AppTrait<Context> for Xddc
         owned_data.xddcc(context.as_ref(), context.as_ref())
     }
 }
-impl<Context: AsRef<DataBase> + AsRef<MultiProgress> + 'static>
-    CmdMetaAppTrait<CmdApp<Context>, Context> for XddccCmdApp
+impl<Context: AsRef<DataBase> + AsRef<MultiProgress> + 'static, OwnedData: 'static>
+    CmdMetaAppTrait<Context, OwnedData> for XddccCmdApp
 {
-    fn subcommand(&self) -> Option<&Command> {
-        Some(&self.command)
-    }
-
     fn read_owned_data(
         &self,
         _: &Context,

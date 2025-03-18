@@ -13,8 +13,8 @@
 // You should have received a copy of the GNU Affero General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-use clap::{arg, ArgMatches, Command, CommandFactory, FromArgMatches, Parser};
-use cxlib::{AppTrait, CmdApp, CmdMetaAppTrait};
+use clap::{arg, ArgMatches, FromArgMatches, Parser};
+use cxlib::{AppTrait, CmdMetaAppTrait};
 
 #[derive(Parser, Debug, Clone)]
 #[command(name = "locations", alias = "lsl")]
@@ -27,22 +27,8 @@ pub struct LocationsParser {
     #[arg(short, long)]
     short: bool,
 }
-
-pub struct LocationsCmdApp {
-    command: Command,
-}
-impl Default for LocationsCmdApp {
-    fn default() -> Self {
-        Self::new()
-    }
-}
-
-impl LocationsCmdApp {
-    pub fn new() -> LocationsCmdApp {
-        let command = LocationsParser::command();
-        LocationsCmdApp { command }
-    }
-}
+#[derive(Debug, Clone, Default)]
+pub struct LocationsCmdApp;
 
 impl<Context> AppTrait<Context> for LocationsCmdApp {
     type OwnedData = LocationsParser;
@@ -68,12 +54,12 @@ impl<Context> AppTrait<Context> for LocationsCmdApp {
         }
     }
 }
-impl<Context: 'static> CmdMetaAppTrait<CmdApp<Context>, Context> for LocationsCmdApp {
-    fn subcommand(&self) -> Option<&Command> {
-        Some(&self.command)
-    }
-
-    fn read_owned_data(&self, _: &Context, matches: &[&ArgMatches]) -> Self::OwnedData {
+impl<Context: 'static, OwnedData: 'static> CmdMetaAppTrait<Context, OwnedData> for LocationsCmdApp {
+    fn read_owned_data(
+        &self,
+        _: &Context,
+        matches: &[&ArgMatches],
+    ) -> <Self as AppTrait<Context, ()>>::OwnedData {
         let matches = matches.last().unwrap();
         LocationsParser::from_arg_matches(matches).unwrap()
     }

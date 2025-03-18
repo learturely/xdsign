@@ -19,7 +19,7 @@ on:
   push:
     branches: [ "main", "dev" ]
   pull_request:
-    branches: [ "main", "dev" ]
+    branches: [ "main", "main-build", "dev", "dev-build" ]
 
 env:
   CARGO_TERM_COLOR: always
@@ -47,7 +47,7 @@ jobs:
         with:
           command: clippy
   build:
-    if: ${{ github.ref == 'refs/heads/main' || github.ref == 'refs/heads/dev-build' }}
+    if: ${{ github.ref == 'refs/heads/main-build' || github.ref == 'refs/heads/dev-build' }}
     needs: [ check ]
     strategy:
       fail-fast: false

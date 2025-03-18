@@ -1,4 +1,4 @@
-# Copyright (C) 2024 worksoup <https://github.com/worksoup/>
+# Copyright (C) 2025 worksoup <https://github.com/worksoup/>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as published
@@ -14,7 +14,7 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 inlineHeader = """
-Copyright (C) ${inceptionYear} ${copyrightOwner}
+Copyright (C) {{ props["inceptionYear"] }} {{ props["copyrightOwner"] }}
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU Affero General Public License as published
@@ -35,5 +35,5 @@ excludes = [
 ]
 
 [properties]
-inceptionYear = 2024
+inceptionYear = 2025
 copyrightOwner = "worksoup <https://github.com/worksoup/>"

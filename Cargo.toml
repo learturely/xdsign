@@ -1,4 +1,4 @@
-# Copyright (C) 2024 worksoup <https://github.com/worksoup/>
+# Copyright (C) 2025 worksoup <https://github.com/worksoup/>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as published
@@ -29,14 +29,12 @@ completion = ["cxlib/completion"]
 
 [dependencies]
 # tikv-jemallocator = "0.5"
-chrono = "0.4"
 clap = { version = "4.5" }
 cxlib = { git = "https://github.com/worksoup/cxlib.git" }
 # cxsign = { path = "../newsign/" }
 env_logger = "0.11"
 indicatif = "0.17"
 indicatif-log-bridge = "0.2"
-inquire = "0.7"
 log = { version = "0.4", features = ["release_max_level_info"] }
 wnewtype = { git = "https://github.com/worksoup/wnewtype.git" }
 x_l4rs = { git = "https://github.com/learturely/x_l4rs.git", default-features = false, features = ["cxlib_integrated"] }
@@ -50,6 +48,6 @@ panic = "abort"
 strip = "symbols"
 
 [build-dependencies]
-resvg = "0.44"
+resvg = "0.45"
 ico = "0.4"
 embed-resource = "3.0"

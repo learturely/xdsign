@@ -19,15 +19,14 @@ mod location_info_getter;
 mod my_progress_bar;
 pub fn run() {
     use crate::{
-        cli::{LocationsCmdApp, XddccCmdApp},
+        cli::{LocationsCmdApp, SignMainApp, XddccCmdApp},
         cmd_app_context::CmdAppContext,
     };
     use cxlib::{
         login::{LoginSolverTrait, LoginSolvers},
         types::Location,
         utils::time_it_and_print_result,
-        AccountCmdApp, AccountsCmdApp, AppTrait, CmdApp, CoursesCmdApp, SignMainApp,
-        WhereIsConfigCmdApp,
+        AccountCmdApp, AccountsCmdApp, AppTrait, CmdApp, CoursesCmdApp, WhereIsConfigCmdApp,
     };
     use indicatif::MultiProgress;
     use log::{error, warn};
